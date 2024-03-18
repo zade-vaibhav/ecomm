@@ -20,7 +20,7 @@ async function updatePassword(req,res){
                 const newPassword=await bcrypt.hash(password,salt)
                 const updatedUser=await user.findByIdAndUpdate({_id:tokenData.id},{$set:{password:newPassword}},{new:true})
                 if(updatedUser){
-                    await password_updated(updatedUser.name,updatedUser.email)
+                    await password_updated(updatedUser.name,updatedUser.email);
                     res.status(200).json({
                         success:true,
                         message:"Password updated!!"
