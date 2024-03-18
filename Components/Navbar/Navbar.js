@@ -9,7 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import Cart from "react-native-vector-icons/Feather"
 
-function Navbar() {
+function Navbar({navigation}) {
   return (
     <View style={styles.container}>
       <Image
@@ -38,7 +38,7 @@ function Navbar() {
        <FontAwesome5 name="user-alt" size={20} color="gray"/>
        <Text style={{color:"white"}}>user</Text>
        </View>
-      <Button title='login'/>
+      <Button onPress={()=>navigation.navigate("Login")} title='login'/>
       <Cart style={{marginHorizontal:5}} name="shopping-cart" size={25} color="white"/>
     </View>
   );

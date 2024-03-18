@@ -4,14 +4,16 @@ import { useSelector } from 'react-redux'
 import Navbar from '../Navbar/Navbar'
 import Location from '../Location/Location'
 import Product from '../Horizontal_product/Product'
+import Poster from '../Poster/Poster'
 
-const Home = () => {
+const Home = ({navigation}) => {
   
   return (
     <SafeAreaView style={styles.home}>
-      <Navbar/>
+      <Navbar navigation={navigation}/>
       <Location/>
       <Product/>
+      <Poster/>
     </SafeAreaView>
   )
 }
