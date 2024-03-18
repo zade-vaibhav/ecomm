@@ -7,6 +7,9 @@ import Home from './Components/Home/Home';
 import Onbord from './Components/Onbording/Onbord';
 import Login from './Components/Login/Login';
 import Registration from './Components/Registration/Registration';
+import EmailPage from './Components/ForgotPassword/EmailPage';
+import EmailOtp from './Components/ForgotPassword/EmailOtp';
+import ChangePassword from './Components/ForgotPassword/ChangePassword';
 
 
 
@@ -27,8 +30,11 @@ function App() {
           
         <Stack.Screen name="Onbord" component={Onbord}  options={{headerShown:false}} />
         <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+        <Stack.Screen name="Registration" component={Registration} options={{headerShown:false}}/>
+        <Stack.Screen name="EmailPage" component={EmailPage} options={{headerShown:false}}/>
+        <Stack.Screen name="EmailOtp" component={EmailOtp} options={{headerShown:false}}/>
+        <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
        
       </Stack.Navigator>
     </NavigationContainer>

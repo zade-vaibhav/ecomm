@@ -6,11 +6,14 @@ const Login = ({navigation}) => {
 
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
+  const [isSubmit, setIsSubmit] = useState(false)
 
   async function handelLogin(){
-
+   setIsSubmit(true)
     if(email=="" || password==""){
       Alert.alert("empty inputFields!!")
+      setIsSubmit(false)
+      return;
     }
 
     try{
@@ -25,17 +28,24 @@ const Login = ({navigation}) => {
           password
       })
   })
+     
+  const res=await responce.json()
 
-    if(responce.success){
+    if(res.success){
       Alert.alert("login successfull..")
+      setIsSubmit(false)
+      setEmail("")
+      setPassword("")
       navigation.navigate("Home")
       return;
     }
     
     Alert.alert(res.error.message)
+    setIsSubmit(false)
     return;
 
   }catch(err){
+    setIsSubmit(false)
     Alert.alert(err)
   }
      
@@ -49,11 +59,11 @@ const Login = ({navigation}) => {
        </View>
        <View style={styles.inputContainer}>
         <Text style={{fontSize:20,fontWeight:600,color:"white"}}>Email</Text>
-        <TextInput value={email} onChangeText={(e)=>setEmail(e)} style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='email'/>
+        <TextInput value={email} onChangeText={(e)=>setEmail(e)} style={{borderWidth:1,borderColor:"gray",width:300,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='email'/>
         <Text style={{fontSize:20,fontWeight:600,color:"white"}}>Password</Text>
-        <TextInput value={password} onChangeText={(e)=>setPassword(e)} secureTextEntry={true} style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='password'/>
-        <Text style={{marginBottom:20,marginTop:10,color:"white"}}>forget password?</Text>
-        <Button onPress={()=>handelLogin()} title='Login'/>
+        <TextInput value={password} onChangeText={(e)=>setPassword(e)} secureTextEntry={true} style={{borderWidth:1,borderColor:"gray",width:300,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='password'/>
+        <Text onPress={()=>navigation.navigate("EmailPage")} style={{marginBottom:20,marginTop:10,color:"white"}}>forget password?</Text>
+        {!isSubmit?<Button onPress={()=>handelLogin()} title='Login'/>:<Button title="wait..."/>}
         <Text style={{marginTop:10}}>don't have account? <Text onPress={()=>navigation.navigate("Registration")} style={{color:"white"}}>Register</Text></Text>
        </View>
        <View style={styles.login_footer}>
