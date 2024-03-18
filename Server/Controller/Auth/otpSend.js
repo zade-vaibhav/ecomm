@@ -16,10 +16,8 @@ async function otpSend(req,res){
     if(!isUser){
         return res.status(401).json({
             success: false,
-            error: {
-                code: "400",
-                message: "email not exist!!"
-            }
+            message: "email not exist!!"
+           
         })
     }else{ 
 

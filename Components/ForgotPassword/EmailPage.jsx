@@ -32,7 +32,7 @@ import React, { useState } from 'react'
         console.log("hello")
      }
      setIsSubmit(false)
-     Alert.alert(res.message)
+     Alert.alert(res.error.message)
     }catch(err){
         setIsSubmit(false)
         Alert.alert(err)
