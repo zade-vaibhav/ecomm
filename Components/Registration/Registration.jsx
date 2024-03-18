@@ -5,11 +5,16 @@ const Registration = ({ navigation }) => {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isSubmit,setIsSubmit] =useState(false)
 
-    function handelSubmit() {
-         
+    async function handelSubmit() {
+         setIsSubmit(true)
+
+         try{
         if(username=="" || password=="" || email==""){
-            return Alert.alert("empty inputFeilds!!")
+           Alert.alert("empty inputFeilds!!")
+           setIsSubmit(false)
+           return;
         }
         const user_name = username.trim()
         const user_email = email.trim()
@@ -17,13 +22,42 @@ const Registration = ({ navigation }) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         console.log(password)
         if (!emailRegex.test(user_email)) {
-            return Alert.alert("email should have proper format")
+         Alert.alert("email should have proper format")
+         setIsSubmit(false)
+         return 
         }
         if (!passwordRegex.test(password)) {
-            return Alert.alert("At least one lowercase letter At least one uppercase letter At least one digit Minimum length of 8 characters.")
+             Alert.alert("At least one lowercase letter At least one uppercase letter At least one digit Minimum length of 8 characters.")
+             setIsSubmit(false)
+             return;
         }
-
-        console.log("login successfull")
+        const responce=await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/register",{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                
+                name:user_name,
+                email: user_email,
+                password
+              })
+        })
+        const res=await responce.json()
+        if(res.success){
+            setIsSubmit(false)
+            Alert.alert("Login successfull!!")
+            setUsername("")
+            setEmail("")
+            setPassword("")
+            navigation.navigate("Login")
+        }
+        Alert.alert(res.error.message)
+        setIsSubmit(false)
+    }catch(err){
+        setIsSubmit(false)
+        Alert.alert("external error or server down!!")
+    }
     }
 
     return (

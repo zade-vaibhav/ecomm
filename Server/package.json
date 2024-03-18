@@ -1,5 +1,5 @@
 {
-  "name": "ecomm",
+  "name": "ecomm-server",
   "version": "1.0.0",
   "description": "react native ecommerse api(vaibhav)",
   "main": "index.js",

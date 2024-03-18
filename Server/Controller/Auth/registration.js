@@ -15,7 +15,7 @@ async function registration(req, res) {
     if (name == "" || email == "" || password == "") {
 
         return res.status(401).json({
-            status: "error",
+            success: false,
             error: {
                 code: "400",
                 message: "empty Input feilds!"
@@ -28,7 +28,7 @@ async function registration(req, res) {
     if (userData.length) {
 
         return res.status(401).json({
-            status: "error",
+            success: false,
             error: {
                 code: "400",
                 message: "user already present!"
@@ -44,8 +44,8 @@ async function registration(req, res) {
     // const Token = await userToToken(newUser._id)
     // const otp = String(parseInt(uuidv4().slice(0, 7), 16) % 900000 + 100000);
     // console.log(otp)
-    return res.json({
-        status: "success",
+    return res.status(201).json({
+        success: true,
         user:newUser ,
         message: "User Created Successfully"
     })
