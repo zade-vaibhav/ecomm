@@ -30,7 +30,7 @@ const EmailPage = ({navigation}) => {
             if (res.success) {
                 setIsSubmit(false)
                 Alert.alert(res.message)
-                navigation.navigate("EmailOtp",{token:res.user.token})
+                navigation.replace("EmailOtp",{token:res.user.token})
                 return;
             }
             setIsSubmit(false)

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Button, Alert } from 'react-native'
 import React, { useState } from 'react'
 
-const EmailOtp = ({route}) => {
+const EmailOtp = ({navigation,route}) => {
     
     const { token } = route.params;
 
@@ -9,15 +9,16 @@ const EmailOtp = ({route}) => {
     const [isSubmit, setIsSubmit] = useState(false)
 
     async function handelVerify(){
+
        setIsSubmit(true)
         if(otp==""){
             setIsSubmit(false)
-            Alert.alert("Empty inputField!!")
+            return Alert.alert("Empty inputField!!")
         }
 
         try{
         const responce=await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/otp/verify",{
-            mathod:"POST",
+            method:"POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -31,8 +32,7 @@ const EmailOtp = ({route}) => {
             setIsSubmit(false)
             console.log(res)
             Alert.alert(res.message)
-            // navigation.navigate("EmailOtp",{token:res.user.token})
-
+            navigation.replace("ChangePassword",{token:res.user.token})
             return;
         }
         setIsSubmit(false)
@@ -40,7 +40,7 @@ const EmailOtp = ({route}) => {
 
     }catch(err){
         setIsSubmit(false)
-        Alert.alert(err)
+        Alert.alert('Error', err.message)
     }
     }
 
