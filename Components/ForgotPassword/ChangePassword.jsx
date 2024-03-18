@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 const ChangePassword = ({navigation,route}) => {
 
   const { token } = route.params;
-  console.log(token)
 
   const [password,setPassword]=useState("")
   const [cPassword,setCPassword]=useState("")

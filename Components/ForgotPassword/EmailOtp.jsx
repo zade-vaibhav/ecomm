@@ -30,7 +30,6 @@ const EmailOtp = ({navigation,route}) => {
 
         if (res.success) {
             setIsSubmit(false)
-            console.log(res)
             Alert.alert(res.message)
             navigation.replace("ChangePassword",{token:res.user.token})
             return;

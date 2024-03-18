@@ -10,9 +10,7 @@ async function verifyOtp(req,res){
 
     try{
     const tokendata=await jwt.verify(token,process.env.SECURITY_JWT)
-    console.log(tokendata)
     const isOtp=await reset_password.findOne({owner:tokendata.id});
-    console.log(isOtp)
     if(isOtp){
          
         if(isOtp.date_expires<Date.now()){
@@ -22,7 +20,6 @@ async function verifyOtp(req,res){
             })
         }else{
             const compareOtp=await bcrypt.compare(otp,isOtp.otp);
-            console.log(compareOtp)
             if(compareOtp){
                
                 await reset_password.findOneAndDelete({owner:tokendata.id})

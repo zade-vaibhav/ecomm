@@ -15,7 +15,6 @@ const EmailPage = ({navigation}) => {
             return Alert.alert("empty inputField!!")
         }
 
-        console.log(email)
         try {
             const responce = await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/email/otp", {
                 method: "POST",
