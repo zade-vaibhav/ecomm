@@ -20,18 +20,18 @@ const Registration = ({ navigation }) => {
             const user_email = email.trim()
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            console.log(password)
+          
             if (!emailRegex.test(user_email)) {
                 Alert.alert("email should have proper format")
                 setIsSubmit(false)
-                return
+                return;
             }
             if (!passwordRegex.test(password)) {
                 Alert.alert("At least one lowercase letter At least one uppercase letter At least one digit Minimum length of 8 characters.")
                 setIsSubmit(false)
                 return;
             }
-            const responce = await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/registe", {
+            const responce = await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/register", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const Registration = ({ navigation }) => {
             setIsSubmit(false)
         } catch (err) {
             setIsSubmit(false)
-            Alert.alert("external error or server down!!")
+            Alert.alert(err)
         }
     }
 
@@ -73,7 +73,7 @@ const Registration = ({ navigation }) => {
                     <TextInput value={email} onChangeText={(e) => setEmail(e)} style={{ borderWidth: 1, borderColor: "gray", width: 300, paddingLeft: 10, borderRadius: 5, marginTop: 10 }} placeholder='email' />
                     <Text style={{ fontSize: 20, fontWeight: 600, color: "white" }}>Password</Text>
                     <TextInput value={password} onChangeText={(e) => setPassword(e)} secureTextEntry={true} style={{ borderWidth: 1, borderColor: "gray", width: 300, paddingLeft: 10, borderRadius: 5, marginTop: 10, marginBottom: 10 }} placeholder='password' />
-                    <Button onPress={() => handelSubmit()} style={styles.ragister_Button} title='Register' />
+                    {isSubmit?<Button style={styles.ragister_Button} title='wait...' />:<Button onPress={() => handelSubmit()} style={styles.ragister_Button} title='Register' />}
                     <Text style={{ marginTop: 10 }}>already registered? <Text onPress={() => navigation.navigate("Login")} style={{ color: "white" }}>Login</Text></Text>
                 </View>
                 <View style={styles.login_footer}>

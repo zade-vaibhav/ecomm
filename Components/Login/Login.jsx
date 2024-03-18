@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,TextInput, KeyboardAvoidingView, Button} from 'react-native'
+import { View, Text,StyleSheet,TextInput, KeyboardAvoidingView, Button,Alert} from 'react-native'
 import React,{useState} from 'react'
 import { Navigate } from 'react-router-dom'
 
@@ -8,6 +8,36 @@ const Login = ({navigation}) => {
   const [password,setPassword]=useState("");
 
   async function handelLogin(){
+
+    if(email=="" || password==""){
+      Alert.alert("empty inputFields!!")
+    }
+
+    try{
+     
+    const responce = await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          email,
+          password
+      })
+  })
+
+    if(responce.success){
+      Alert.alert("login successfull..")
+      navigation.navigate("Home")
+      return;
+    }
+    
+    Alert.alert(res.error.message)
+    return;
+
+  }catch(err){
+    Alert.alert(err)
+  }
      
   }
 

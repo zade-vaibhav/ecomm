@@ -33,7 +33,7 @@ if(!isPassword){
 const token=await jwt.sign({id:userExist._id},process.env.SECURITY_JWT,{expiresIn: '1d'})
 res.status(201).json({
     success:true,
-    message:"login success full!!",
+    message:"login successfull!!",
     user:{
         token
     }
