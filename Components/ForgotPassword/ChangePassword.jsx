@@ -1,16 +1,18 @@
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Button, Alert } from 'react-native'
 import React, { useState } from 'react'
 
-const ChangePassword = () => {
+const ChangePassword = ({navigation,route}) => {
+
+  const { token } = route.params;
+  console.log(token)
 
   const [password,setPassword]=useState("")
   const [cPassword,setCPassword]=useState("")
   const [isSubmit, setIsSubmit] = useState(false)
 
-  async function handelUpdate({navigation,route}){
-    
-    const { token } = route.params;
-    console.log(token)
+
+
+  async function handelUpdate(){
 
     setIsSubmit(true)
 
@@ -34,7 +36,7 @@ const ChangePassword = () => {
     }
 
     try{
-      const responce=await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/otp/verify",{
+      const responce=await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/update",{
           method:"POST",
           headers: {
               "Content-Type": "application/json",
@@ -47,9 +49,8 @@ const ChangePassword = () => {
 
       if (res.success) {
           setIsSubmit(false)
-          console.log(res)
           Alert.alert(res.message)
-          navigation.replace("ChangePassword",{token:res.user.token})
+          navigation.replace("Login")
           return;
       }
       setIsSubmit(false)

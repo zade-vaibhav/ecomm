@@ -2,7 +2,8 @@ const jwt=require("jsonwebtoken")
 const dotenv=require("dotenv");
 const user = require("../../Model/user");
 dotenv.config()
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { password_updated } = require("../../Helper/mail/mail");
 
 async function updatePassword(req,res){
     const {password}=req.body;
@@ -19,6 +20,7 @@ async function updatePassword(req,res){
                 const newPassword=await bcrypt.hash(password,salt)
                 const updatedUser=await user.findByIdAndUpdate({_id:tokenData.id},{$set:{password:newPassword}},{new:true})
                 if(updatedUser){
+                    await password_updated(updatedUser.name,updatedUser.email)
                     res.status(200).json({
                         success:true,
                         message:"Password updated!!"
