@@ -2,41 +2,43 @@ import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Button, Alert 
 import React, { useState } from 'react'
 
 
- const EmailPage = ({navigation}) => {
-   
-    const [email,setEmail]=useState("")
+const EmailPage = ({navigation}) => {
+
+    const [email, setEmail] = useState("")
     const [isSubmit, setIsSubmit] = useState(false)
 
-    async function handelSent(){
+    async function handelSent() {
 
         setIsSubmit(true)
-     if(email==""){
-        setIsSubmit(false)
-        return Alert.alert("empty inputField!!")
-     }
-     
-     console.log(email)
-     try{
-     const responce=await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/email/otp",{
-        method:"POST",
-        headers:{
-            'Content-Type': 'application/json',
-        },
-        body:JSON.stringify({email})
-     })
+        if (email == "") {
+            setIsSubmit(false)
+            return Alert.alert("empty inputField!!")
+        }
 
-     const res=await responce.json();
-     
-     if(res.status){
-        setIsSubmit(false)
-        console.log("hello")
-     }
-     setIsSubmit(false)
-     Alert.alert(res.error.message)
-    }catch(err){
-        setIsSubmit(false)
-        Alert.alert(err)
-    }
+        console.log(email)
+        try {
+            const responce = await fetch("https://ecomm-82tz.onrender.com/api/v1/auth/resetpassword/email/otp", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            })
+
+            const res = await responce.json();
+
+            if (res.success) {
+                setIsSubmit(false)
+                Alert.alert(res.message)
+                navigation.navigate("EmailOtp",{token:res.user.token})
+                return;
+            }
+            setIsSubmit(false)
+            Alert.alert(res.message)
+        } catch (err) {
+            setIsSubmit(false)
+            Alert.alert(err)
+        }
     }
 
     return (
@@ -47,8 +49,8 @@ import React, { useState } from 'react'
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={{ fontSize: 20, fontWeight: 600, color: "white" }}>Email</Text>
-                    <TextInput value={email} onChangeText={(e) => setEmail(e)} style={{ borderWidth: 1, borderColor: "gray", width: 300, paddingLeft: 10, borderRadius: 5, marginTop: 10,marginBottom:20 }} placeholder='registered email' />
-                    
+                    <TextInput value={email} onChangeText={(e) => setEmail(e)} style={{ borderWidth: 1, borderColor: "gray", width: 300, paddingLeft: 10, borderRadius: 5, marginTop: 10, marginBottom: 20 }} placeholder='registered email' />
+
                     {!isSubmit ? <Button onPress={() => handelSent()} title='Send-OTP' /> : <Button title="wait..." />}
                 </View>
                 <View style={styles.login_footer}>

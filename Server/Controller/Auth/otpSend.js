@@ -90,7 +90,7 @@ async function otpSend(req,res){
                     await passwordEmailVerify.save();
 
                     // create token of user credentials
-                    const token = await jwt.sign({id:isUser._id},process.env.SECURITY_JWT)
+                    const token = await jwt.sign({id:isUser._id},process.env.SECURITY_JWT,{expiresIn: '1h'})
 
                     res.status(200).json({
                         success:true,
