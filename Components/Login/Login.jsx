@@ -1,8 +1,16 @@
 import { View, Text,StyleSheet,TextInput, KeyboardAvoidingView, Button} from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import { Navigate } from 'react-router-dom'
 
 const Login = ({navigation}) => {
+
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+
+  async function handelLogin(){
+     
+  }
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.loginContainer}>
@@ -10,12 +18,12 @@ const Login = ({navigation}) => {
         <Text style={{fontSize:25,fontWeight:600}}>Amazon-Login</Text>
        </View>
        <View style={styles.inputContainer}>
-        <Text style={{fontSize:20,fontWeight:600,color:"white"}}>UserName</Text>
-        <TextInput style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='username'/>
+        <Text style={{fontSize:20,fontWeight:600,color:"white"}}>Email</Text>
+        <TextInput value={email} onChangeText={(e)=>setEmail(e)} style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='email'/>
         <Text style={{fontSize:20,fontWeight:600,color:"white"}}>Password</Text>
-        <TextInput secureTextEntry={true} style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='password'/>
+        <TextInput value={password} onChangeText={(e)=>setPassword(e)} secureTextEntry={true} style={{borderWidth:1,borderColor:"gray",width:200,paddingLeft:10,borderRadius:5,marginTop:10}} placeholder='password'/>
         <Text style={{marginBottom:20,marginTop:10,color:"white"}}>forget password?</Text>
-        <Button title='Login'/>
+        <Button onPress={()=>handelLogin()} title='Login'/>
         <Text style={{marginTop:10}}>don't have account? <Text onPress={()=>navigation.navigate("Registration")} style={{color:"white"}}>Register</Text></Text>
        </View>
        <View style={styles.login_footer}>

@@ -41,9 +41,7 @@ async function registration(req, res) {
     const newUser = await user.create({ name, email, password: newPassword })
     await newUser.save()
     await register_greet(name,email)
-    // const Token = await userToToken(newUser._id)
-    // const otp = String(parseInt(uuidv4().slice(0, 7), 16) % 900000 + 100000);
-    // console.log(otp)
+    
     return res.status(201).json({
         success: true,
         user:newUser ,
